@@ -150,7 +150,7 @@
 
                 // Mostrar el beneficio y la comisión calculados
                 $('#resultado').text("El beneficio es: " + beneficio);
-                $('#comision').text("La comisión es: " + comision + "sin contar los 12€ de envio");
+                $('#comision').text("La comisión es (sin gastos de envio de 12€): " + comision);
 
                 // Obtener los registros actuales del almacenamiento local
                 var registros = JSON.parse(localStorage.getItem('registros')) || [];
