@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Calculadora</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        /* Estilos CSS aquí */
+
+        body {
+            font-family: Arial, sans-serif;
+            background-image: url('air_jordan_1_aqua_bleached.jpg');
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-position: center;
+        }
+
+        .container {
+            max-width: 500px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: rgba(255, 255, 255, 0.8);
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Resto del código CSS */
+    </style>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            // Función para obtener y mostrar los últimos registros
+            function obtenerRegistros() {
+                var registros = JSON.parse(localStorage.getItem('registros'));
+                var tablaRegistros = $('#registros tbody');
+                tablaRegistros.empty();
+
+                if (registros) {
+                    registros.forEach(function(registro) {
+                        var fila = `<tr>
+                                        <td>${registro['Valor de venta']}</td>
+                                        <td>${registro['Valor de compra']}</td>
+                                        <td>${registro['SKU']}</td>
+                                        <td>${registro['Beneficio']}</td>
+                                        <td>${registro['Comisión']}</td>
+                                    </tr>`;
+                        tablaRegistros.append(fila);
+                    });
+                }
+            }
+
+            // Obtener los últimos registros al cargar la página
+            obtenerRegistros();
+
+            // Manejar el evento de envío del formulario
+            $('#calculo-form').submit(function(event) {
+                event.preventDefault();
+                var x = parseFloat($('#x-input').val());
+                var y = parseFloat($('#y-input').val());
+                var sku = $('#sku-input').val();
+                var beneficio = x - y - (0.095 * x + 12);
+                var comision = 0.095 * x;
+
+                // Mostrar el beneficio y la comisión calculados
+                $('#resultado').text("El beneficio es: " + beneficio);
+                $('#comision').text("La comisión es: " + comision);
+
+                // Obtener los registros actuales del almacenamiento local
+                var registros = JSON.parse(localStorage.getItem('registros')) || [];
+
+                // Agregar el nuevo registro
+                registros.push({
+                    'Valor de venta': x,
+                    'Valor de compra': y,
+                    'SKU': sku,
+                    'Beneficio': beneficio,
+                    'Comisión': comision
+                });
+
+                // Almacenar los registros actualizados en el almacenamiento local
+                localStorage.setItem('registros', JSON.stringify(registros));
+
+                // Actualizar la tabla de registros
+                obtenerRegistros();
+            });
+        });
+    </script>
+</head>
+<body>
+    <div class="container">
+        <h1>Calculadora</h1>
+        <form id="calculo-form">
+            <label for="x-input">Valor de venta:</label>
+            <input type="number" step="0.01" id="x-input" name="x"><br><br>
+            <label for="y-input">Valor de compra:</label>
+            <input type="number" step="0.01" id="y-input" name="y"><br><br>
+            <label for="sku-input">SKU:</label>
+            <input type="text" id="sku-input" name="sku"><br><br>
+            <button type="submit">Calcular</button>
+        </form>
+
+        <div id="resultado"></div>
+        <div id="comision"></div>
+
+        <h2>Últimos registros</h2>
+        <table id="registros">
+            <thead>
+                <tr>
+                    <th>Valor de venta</th>
+                    <th>Valor de compra</th>
+                    <th>SKU</th>
+                    <th>Beneficio</th>
+                    <th>Comisión</th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>
