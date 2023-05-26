@@ -93,6 +93,7 @@
         table {
             width: 100%;
             border-collapse: collapse;
+            margin-bottom: 20px;
         }
 
         th, td {
@@ -150,7 +151,7 @@
 
                 // Mostrar el beneficio y la comisión calculados
                 $('#resultado').text("El beneficio es: " + beneficio);
-                $('#comision').text("La comisión es (sin gastos de envio de 12€): " + comision);
+                $('#comision').text("La comisión es: " + comision);
 
                 // Obtener los registros actuales del almacenamiento local
                 var registros = JSON.parse(localStorage.getItem('registros')) || [];
@@ -201,6 +202,44 @@
                 </tr>
             </thead>
             <tbody>
+            </tbody>
+        </table>
+
+        <h2>Tabla de Conversión de Tallas</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Talla Americana</th>
+                    <th>Talla Inglesa</th>
+                    <th>Talla Europea</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>6</td>
+                    <td>5.5</td>
+                    <td>38.5</td>
+                </tr>
+                <tr>
+                    <td>6.5</td>
+                    <td>6</td>
+                    <td>39</td>
+                </tr>
+                <tr>
+                    <td>7</td>
+                    <td>6.5</td>
+                    <td>40</td>
+                </tr>
+                <tr>
+                    <td>7.5</td>
+                    <td>7</td>
+                    <td>40.5</td>
+                </tr>
+                <tr>
+                    <td>8</td>
+                    <td>7.5</td>
+                    <td>41</td>
+                </tr>
             </tbody>
         </table>
     </div>
